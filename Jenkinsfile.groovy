@@ -3,15 +3,15 @@ node{
         git 'git@github.com:daudmu21/cool_website.git'
     }
     stage("Webserver Install"){
-        sh "ssh ec2-user@52.214.81.131  sudo yum install httpd -y"
+        sh "ssh ec2-user@${env}  sudo yum install httpd -y"
     }
     stage("Index file"){
-        sh "scp index.html  ec2-user@52.214.81.131:/tmp"
+        sh "scp index.html  ec2-user@${env}:/tmp"
     }
     stage("Move Index"){
-        sh 'ssh ec2-user@52.214.81.131   "sudo mv /tmp/index.html /var/www/html/index.html"'
+        sh 'ssh ec2-user@${env}   "sudo mv /tmp/index.html /var/www/html/index.html"'
     }
     stage("Start HTTPD"){
-        sh "ssh ec2-user@52.214.81.131   sudo systemctl restart httpd"
+        sh "ssh ec2-user@${env}   sudo systemctl restart httpd"
     }
 }
